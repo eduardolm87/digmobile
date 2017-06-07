@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
+	//Movement Setup
 	public float ClickingMaxHeightDifference = 0.33f;
 	public float XMovementSensitivity = 0.1f;
-	public float XMovementSpeed = 2f;
+	public float XMovementSpeed = 10f;
 	public float XMovementStopDistance = 0.1f;
 	public float YFallSpeedTolerance = 1f;
-	
-
-	[HideInInspector]
-	public Rigidbody2D rigidbody;
 
 
+	//Elements
+	public PowerupSword Sword;
+
+
+	//Auxiliar
 	Vector2 MovementTarget = Vector2.zero;
 	bool MovementTargetSet = false;
-
-
 
 
 
@@ -29,8 +29,14 @@ public class Player : MonoBehaviour
 		rigidbody = GetComponent<Rigidbody2D>();
 	}
 
-	void Update()
+	  
+	protected override void Update()
 	{
+		base.Update();
+
+		if (Stun > 0)
+			return;
+
 		GetInput();
 		TryMovingToTarget();
 		FallingCancelMovement();
@@ -60,11 +66,9 @@ public class Player : MonoBehaviour
 
 	void TryToMoveToX(Vector2 Pos)
 	{
-
 		Vector2 mypos = transform.position;
 		if (Vector2.Distance(mypos, Pos) < XMovementSensitivity)
 		{
-			Debug.Log("Not moving");
 			return;
 		}
 
@@ -85,16 +89,21 @@ public class Player : MonoBehaviour
 		}
 		else
 		{
-			int direction = 1;
-			if (transform.position.x > MovementTarget.x)
-				direction = -1;
-			Vector2 force = Vector2.right * direction * XMovementSpeed;
-
-			rigidbody.AddForce(force);
+			MoveToTarget();
 		}
 	}
 
-	void Stop()
+	void MoveToTarget()
+	{
+		int direction = 1;
+		if (transform.position.x > MovementTarget.x)
+			direction = -1;
+		Vector2 force = Vector2.right * direction * XMovementSpeed;
+
+		rigidbody.AddForce(force);
+	}
+
+	public void Stop()
 	{
 		MovementTargetSet = false;
 		rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
@@ -103,6 +112,8 @@ public class Player : MonoBehaviour
 
 	void FallingCancelMovement()
 	{
+		
+
 		if (Falling())
 		{
 			Stop();
