@@ -22,14 +22,12 @@ public class Player : Character
 
 
 
-
-
-	void Awake()
+	protected override void Start()
 	{
-		rigidbody = GetComponent<Rigidbody2D>();
+		base.Start();
+		GameManager.Instance.UI.Refresh();
 	}
 
-	  
 	protected override void Update()
 	{
 		base.Update();

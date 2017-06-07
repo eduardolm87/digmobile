@@ -12,13 +12,29 @@ public class Character : MonoBehaviour
 	[HideInInspector]
 	public Rigidbody2D rigidbody;
 
-	//[HideInInspector]
+	[HideInInspector]
+	public SpriteRenderer bodyRenderer;
+
+	[HideInInspector]
 	public float Stun = 0;
 
 
-	void Awake()
+	public bool IsPlayer = false;
+
+
+
+	protected virtual void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
+		bodyRenderer = GetComponent<SpriteRenderer>();
+
+		if (this is Player)
+			IsPlayer = true;
+	}
+
+	protected virtual void Start()
+	{
+		
 	}
 
 	protected virtual void Update()
@@ -35,6 +51,14 @@ public class Character : MonoBehaviour
 			if (Stun < Time.deltaTime)
 			{
 				Stun = 0;
+				bodyRenderer.color = Color.white;
+			}
+			else
+			{
+				if (((int)(Stun * 10)) % 2 == 0)
+					bodyRenderer.color = Color.white;
+				else
+					bodyRenderer.color = GameManager.Instance.StunColor;
 			}
 		}
 	}
@@ -74,11 +98,16 @@ public class Character : MonoBehaviour
 	public void Damage(int damage)
 	{
 		HP -= damage;
+
+		if (IsPlayer)
+		{
+			GameManager.Instance.UI.Refresh();
+		}
 	}
 
 	public void Knockback(Vector3 direction)
 	{
-		if (this is Player)
+		if (IsPlayer)
 		{
 			this.GetComponent<Player>().Stop();
 		}

@@ -12,5 +12,14 @@ public class GameManager : MonoBehaviour
 		Instance = this;
 	}
 
+
+
+
+	public Player Player;
+	public UI UI;
+
 	public List<Sprite> BreakTiles = new List<Sprite>();
+	public Color StunColor;
+
+
 }
