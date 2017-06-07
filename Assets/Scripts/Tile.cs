@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour
 	public SpriteRenderer BreakRenderer;
 
 	public int Life = 5;
+	public bool Breakable = true;
 
 
 	public void DestroyTile()
@@ -17,7 +18,8 @@ public class Tile : MonoBehaviour
 
 	public void OnMouseDown()
 	{
-		Damage();
+		if (Breakable)
+			Damage();
 	}
 
 	void Damage()
