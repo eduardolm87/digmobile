@@ -12,7 +12,6 @@ public class Character : MonoBehaviour
 	[HideInInspector]
 	public Rigidbody2D rigidbody;
 
-	[HideInInspector]
 	public SpriteRenderer bodyRenderer;
 
 	[HideInInspector]
@@ -21,12 +20,13 @@ public class Character : MonoBehaviour
 
 	public bool IsPlayer = false;
 
+	[HideInInspector]
+	public bool OrientationRight=true;
 
 
 	protected virtual void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
-		bodyRenderer = GetComponent<SpriteRenderer>();
 
 		if (this is Player)
 			IsPlayer = true;
@@ -40,6 +40,7 @@ public class Character : MonoBehaviour
 	protected virtual void Update()
 	{
 		StunCounter();
+		Orientate();
 	}
 
 
@@ -73,6 +74,27 @@ public class Character : MonoBehaviour
 		}
 	}
 
+
+	void Orientate()
+	{
+		if (rigidbody.velocity.x > 0)
+		{
+			OrientationRight = true;
+		}
+		else if (rigidbody.velocity.x < 0)
+		{
+			OrientationRight = false;
+		}
+
+		if(OrientationRight)
+		{
+			bodyRenderer.flipX = false;
+		}
+		else 
+		{
+			bodyRenderer.flipX = true;
+		}
+	}
 
 	void TouchHitbox(Hitbox hitbox)
 	{
