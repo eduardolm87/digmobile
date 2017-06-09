@@ -83,4 +83,32 @@ public class GameManager : MonoBehaviour
 		CurrentSection = go.GetComponent<Section>();
 	}
 
+
+	public void ResetGame()
+	{
+		CloseCurrentLevel();
+		TitleScreen.Show();
+	}
+
+	public void ResetLevel()
+	{
+		CloseCurrentLevel();
+		//todo
+	}
+
+	void CloseCurrentLevel()
+	{
+		DeinstantiatePlayer();
+
+		Destroy(CurrentSection.gameObject);
+		CurrentSection = null;
+	}
+
+	void DeinstantiatePlayer()
+	{
+		Destroy(Player.gameObject);
+		Player = null;
+	}
+
+
 }
