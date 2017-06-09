@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-
 	public Image HPBar;
 
 	public void Refresh()
@@ -14,4 +13,13 @@ public class UI : MonoBehaviour
 		HPBar.fillAmount = hpFill;
 	}
 
+	public void Hide()
+	{
+		gameObject.SetActive(false);
+	}
+
+	public void Show()
+	{
+		gameObject.SetActive(true);
+	}
 }

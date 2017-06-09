@@ -123,7 +123,7 @@ public class Character : MonoBehaviour
 
 		if (IsPlayer)
 		{
-			GameManager.Instance.UI.Refresh();
+			GameManager.Instance.PlayerHUD.Refresh();
 		}
 	}
 

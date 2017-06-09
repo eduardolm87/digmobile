@@ -5,5 +5,4 @@ using UnityEngine;
 public class Section : MonoBehaviour
 {
 	public Transform StartPosition;
-	public Transform EndPosition;
 }

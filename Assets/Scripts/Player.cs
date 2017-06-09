@@ -25,7 +25,7 @@ public class Player : Character
 	protected override void Start()
 	{
 		base.Start();
-		GameManager.Instance.UI.Refresh();
+		GameManager.Instance.PlayerHUD.Refresh();
 	}
 
 	protected override void Update()
